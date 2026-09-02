@@ -1,0 +1,2418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#dff1ff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="EVR Gallery">
+<link rel="icon" type="image/svg+xml" href="#evr-icon">
+<title>EVR Photo Gallery</title>
+
+<style>
+:root{
+  --bg:#dff1ff;
+  --panel:#ffffff;
+  --panel2:#e8f6ff;
+  --line:#a8d3ef;
+  --blue:#0a9fe8;
+  --blue2:#2767e9;
+  --gold:#e8ad18;
+  --text:#102f4d;
+  --muted:#64809b;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:#d8efff;
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
+  "Segoe UI",Arial,sans-serif
+}
+
+body{
+  display:flex;
+  justify-content:center
+}
+
+button,input{
+  font:inherit
+}
+
+button{
+  cursor:pointer
+}
+
+.app{
+  width:100%;
+  max-width:520px;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 50% -10%,#ffffff 0,#eef9ff 32%,#dcefff 78%);
+  position:relative;
+  overflow:hidden
+}
+
+/* STATUS */
+.status{
+  height:29px;
+  padding:6px 18px 0;
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  font-weight:700;
+  color:#476783
+}
+
+/* HEADER */
+.top{
+  padding:12px 16px 10px;
+  display:flex;
+  align-items:center;
+  gap:11px
+}
+
+.logo{
+  width:48px;
+  height:48px;
+  border-radius:13px;
+  flex:none;
+  filter:drop-shadow(0 3px 8px #5598bd55)
+}
+
+.brand{
+  line-height:1
+}
+
+.brand b{
+  font-size:24px;
+  letter-spacing:-1px;
+  color:#082b53
+}
+
+.brand span{
+  display:block;
+  font-size:12px;
+  color:#567692;
+  margin-top:3px
+}
+
+.top-spacer{
+  flex:1
+}
+
+.iconbtn{
+  width:40px;
+  height:40px;
+  border:1px solid #afd5ed;
+  background:#f8fdff;
+  color:#174a72;
+  border-radius:13px;
+  font-size:20px;
+  box-shadow:0 5px 15px #6ba5c622
+}
+
+/* SEARCH */
+.search{
+  margin:0 16px 12px;
+  height:44px;
+  border-radius:24px;
+  background:#ffffff;
+  border:1px solid #b6d9ef;
+  display:flex;
+  align-items:center;
+  padding:0 14px;
+  gap:9px;
+  color:#6a87a3;
+  box-shadow:0 5px 17px #69a4c526
+}
+
+.search input{
+  border:0;
+  outline:0;
+  background:none;
+  color:#193953;
+  width:100%;
+  font-size:14px
+}
+
+.content{
+  padding:0 14px 100px
+}
+
+/* WELCOME */
+.welcome{
+  background:linear-gradient(135deg,#ffffff,#e1f3ff);
+  border:1px solid #a9d4f0;
+  border-radius:18px;
+  padding:13px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 10px 25px #6ba4c52d
+}
+
+.welcome img{
+  width:58px;
+  height:58px;
+  border-radius:15px
+}
+
+.welcome b{
+  font-size:16px
+}
+
+.welcome p{
+  margin:4px 0 0;
+  color:#64809b;
+  font-size:12px
+}
+
+/* CARDS */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:10px
+}
+
+.card{
+  min-height:112px;
+  border:1px solid #a8d3ef;
+  border-radius:17px;
+  background:linear-gradient(145deg,#ffffff,#e4f4ff);
+  padding:14px;
+  position:relative;
+  overflow:hidden;
+  text-align:left;
+  color:#143655;
+  box-shadow:inset 0 1px #fff,0 8px 20px #70a9cc2c
+}
+
+.card:after{
+  content:"";
+  position:absolute;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  right:-30px;
+  top:-30px;
+  background:#1ba7ff14
+}
+
+.card .ci{
+  font-size:29px;
+  margin-bottom:10px
+}
+
+.card b{
+  font-size:14px;
+  display:block
+}
+
+.card small{
+  font-size:11px;
+  color:#66829d
+}
+
+.card .mini-logo{
+  position:absolute;
+  right:9px;
+  bottom:9px;
+  width:28px;
+  height:28px;
+  border-radius:8px
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:19px 3px 9px;
+  font-weight:700
+}
+
+.section-title span{
+  font-size:13px;
+  color:#5c7892
+}
+
+.section-title button{
+  background:none;
+  border:0;
+  color:#087fc1
+}
+
+/* PHOTOS */
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:5px
+}
+
+.thumb{
+  aspect-ratio:1;
+  border-radius:9px;
+  overflow:hidden;
+  background:#cde9fa;
+  position:relative;
+  border:1px solid #a9d1e9
+}
+
+.thumb img,
+.thumb video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block
+}
+
+.star{
+  position:absolute;
+  right:5px;
+  top:5px;
+  font-size:15px;
+  text-shadow:0 1px 5px #000
+}
+
+.play{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  background:#0008;
+  border-radius:50%;
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  color:white
+}
+
+/* NAVIGATION */
+.bottom{
+  position:fixed;
+  z-index:30;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(520px,100%);
+  height:78px;
+  background:#f7fcffff;
+  border-top:1px solid #b4d8ee;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  padding-bottom:env(safe-area-inset-bottom);
+  box-shadow:0 -7px 25px #5793b81c
+}
+
+.nav{
+  border:0;
+  background:none;
+  color:#67839d;
+  font-size:10px
+}
+
+.nav .nicon{
+  font-size:22px;
+  display:block;
+  margin-bottom:3px
+}
+
+.nav.active{
+  color:#079fe9
+}
+
+/* VIEWS */
+.view{
+  display:none;
+  min-height:100vh
+}
+
+.view.active{
+  display:block
+}
+
+/* SUB HEADER */
+.backbar{
+  height:66px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 15px;
+  border-bottom:1px solid #b6d7eb;
+  background:#eef9ff;
+  color:#143b5b
+}
+
+.backbar h2{
+  font-size:17px;
+  margin:0;
+  flex:1;
+  text-align:center
+}
+
+.backbar button{
+  background:none;
+  border:0;
+  color:#174873;
+  font-size:26px
+}
+
+/* ALBUM LIST */
+.list{
+  padding:12px 14px 100px
+}
+
+.album{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:linear-gradient(135deg,#ffffff,#e6f5ff);
+  border:1px solid #afd5ec;
+  border-radius:13px;
+  padding:8px;
+  margin-bottom:8px;
+  color:#123b5d;
+  box-shadow:0 5px 15px #69a6c91c
+}
+
+.album img{
+  width:52px;
+  height:52px;
+  object-fit:cover;
+  border-radius:9px
+}
+
+.album b{
+  display:block
+}
+
+.album small{
+  color:#67829d
+}
+
+/* VIEWER */
+.viewer{
+  position:fixed;
+  z-index:100;
+  inset:0;
+  background:#000;
+  display:none;
+  flex-direction:column
+}
+
+.viewer.open{
+  display:flex
+}
+
+.vtop{
+  height:72px;
+  padding:10px 15px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  justify-content:flex-start;
+  background:#06172df2;
+  border-bottom:1px solid #173e69;
+  position:relative;
+  z-index:3
+}
+
+.vtop button,
+.vbottom button{
+  background:none;
+  border:0;
+  color:#fff;
+  font-size:24px
+}
+
+.viewerBack{
+  width:52px!important;
+  height:52px!important;
+  min-width:52px!important;
+  border:1px solid #4da6df!important;
+  border-radius:15px!important;
+  background:linear-gradient(145deg,#0d3b70,#08264d)!important;
+  color:white!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:38px!important;
+  line-height:1!important;
+  box-shadow:0 4px 14px #0007!important
+}
+
+.vmedia{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden
+}
+
+.vmedia img,
+.vmedia video{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain
+}
+
+.vbottom{
+  min-height:92px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  background:#06172df2
+}
+
+.vbottom button{
+  min-width:60px
+}
+
+.vbottom span{
+  display:block;
+  font-size:10px;
+  margin-top:4px
+}
+
+.viewerBottomBack{
+  color:#49bfff!important;
+  font-weight:800!important
+}
+
+.viewerBottomBack span{
+  color:#e8f5ff!important;
+  font-size:10px!important
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  z-index:110;
+  inset:0;
+  background:#0009;
+  display:none;
+  align-items:flex-end
+}
+
+.modal.open{
+  display:flex
+}
+
+.sheet{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  background:#f4fbff;
+  border:1px solid #aad3ec;
+  border-radius:24px 24px 0 0;
+  padding:22px 18px 30px
+}
+
+.sheet h2{
+  text-align:center;
+  margin:0 0 15px
+}
+
+.sheet button.action{
+  width:100%;
+  height:52px;
+  margin:6px 0;
+  border:0;
+  border-radius:14px;
+  background:#dcefff;
+  color:#134a76;
+  font-weight:700
+}
+
+.sheet button.primary{
+  background:linear-gradient(90deg,#0ca8ee,#2b68ee);
+  color:#fff
+}
+
+.empty{
+  padding:40px 10px;
+  text-align:center;
+  color:#6885a2
+}
+
+.hidden{
+  display:none!important
+}
+
+#toast{
+  position:fixed;
+  z-index:200;
+  left:50%;
+  bottom:95px;
+  transform:translateX(-50%) translateY(20px);
+  background:#fff;
+  color:#103958;
+  border:1px solid #abd4ed;
+  border-radius:14px;
+  padding:11px 15px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  font-size:13px;
+  box-shadow:0 8px 24px #4b82aa35
+}
+
+@media(min-width:700px){
+  .app{
+    min-height:900px;
+    margin:20px 0;
+    border-radius:28px;
+    box-shadow:0 20px 80px #0005
+  }
+
+  .bottom{
+    position:absolute;
+    border-radius:0 0 28px 28px
+  }
+}
+</style>
+
+<!-- Hidden SVG used as the built-in EVR icon -->
+<svg id="evrIconSvg" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 256 256"
+     style="display:none">
+  <defs>
+    <linearGradient id="blueG" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#063b93"/>
+      <stop offset=".55" stop-color="#078cff"/>
+      <stop offset="1" stop-color="#021d4b"/>
+    </linearGradient>
+    <linearGradient id="goldG">
+      <stop stop-color="#fff7b0"/>
+      <stop offset=".5" stop-color="#ffd52f"/>
+      <stop offset="1" stop-color="#d48a00"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="7" y="7" width="242" height="242" rx="48"
+        fill="url(#blueG)" stroke="url(#goldG)" stroke-width="8"/>
+
+  <!-- photo cards -->
+  <rect x="39" y="40" width="76" height="62" rx="9"
+        fill="#46bcff" stroke="#fff" stroke-width="5"
+        transform="rotate(-9 39 40)"/>
+
+  <rect x="137" y="40" width="76" height="62" rx="9"
+        fill="#ff704b" stroke="#fff" stroke-width="5"
+        transform="rotate(9 137 40)"/>
+
+  <!-- mountain -->
+  <path d="M47 91l22-29 12 16 12-13 22 26"
+        fill="#eef8ff"/>
+
+  <!-- sunset -->
+  <circle cx="176" cy="70" r="13" fill="#ffdc38"/>
+  <path d="M143 89q33-35 66 0" fill="#ff9d38"/>
+
+  <!-- camera -->
+  <rect x="38" y="92" width="180" height="89" rx="29"
+        fill="#f6b61b" opacity=".96"
+        stroke="#ffd82e" stroke-width="4"/>
+
+  <circle cx="128" cy="128" r="51"
+          fill="#15233b" stroke="#eef4ff" stroke-width="7"/>
+
+  <circle cx="128" cy="128" r="30"
+          fill="#041a39"
+          stroke="#14b9ff"
+          stroke-width="6"/>
+
+  <circle cx="116" cy="116" r="8" fill="#ff4e86"/>
+  <circle cx="143" cy="112" r="7" fill="#6ce8ff"/>
+
+  <!-- EVR -->
+  <text x="128" y="194"
+        text-anchor="middle"
+        font-family="Arial,sans-serif"
+        font-size="57"
+        font-weight="900"
+        fill="#fff">EVR</text>
+
+  <rect x="42" y="204" width="172" height="29"
+        rx="12" fill="#082453"
+        stroke="url(#goldG)" stroke-width="4"/>
+
+  <text x="128" y="224"
+        text-anchor="middle"
+        font-family="Arial,sans-serif"
+        font-size="12"
+        font-weight="900"
+        fill="#fff">PHOTO GALLERY</text>
+</svg>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- HOME -->
+<section id="home" class="view active">
+
+  <div class="status">
+    <span id="clock">9:41</span>
+    <span>●●● Wi-Fi ▰</span>
+  </div>
+
+  <header class="top">
+    <img id="logo" class="logo" alt="EVR">
+    <div class="brand">
+      <b>EVR</b>
+      <span>Photo Gallery</span>
+    </div>
+
+    <div class="top-spacer"></div>
+
+    <button class="iconbtn" onclick="showView('searchView')">⌕</button>
+    <button class="iconbtn" onclick="showView('settingsView')">⚙</button>
+  </header>
+
+  <div class="search">
+    <span>⌕</span>
+    <input id="homeSearch"
+           placeholder="Search photos and albums..."
+           oninput="renderGallery()">
+  </div>
+
+  <main class="content">
+
+    <div class="welcome">
+      <img id="logo2" alt="EVR">
+      <div>
+        <b>Welcome to EVR Photo Gallery</b>
+        <p>Your memories, always with you</p>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <button class="card"
+              onclick="showView('photosView')">
+        <div class="ci">🖼️</div>
+        <b>All Photos</b>
+        <small id="countCard">0 photos</small>
+        <img class="mini-logo" id="ml1">
+      </button>
+
+      <button class="card"
+              onclick="showFavorites()">
+        <div class="ci">⭐</div>
+        <b>Favorites</b>
+        <small id="favCard">0 photos</small>
+        <img class="mini-logo" id="ml2">
+      </button>
+
+      <button class="card"
+              onclick="cameraInput.click()">
+        <div class="ci">📷</div>
+        <b>Camera</b>
+        <small>Take a photo</small>
+        <img class="mini-logo" id="ml3">
+      </button>
+
+      <button class="card"
+              onclick="showView('albumsView')">
+        <div class="ci">📁</div>
+        <b>Albums</b>
+        <small>Organize photos</small>
+        <img class="mini-logo" id="ml4">
+      </button>
+
+      <button class="card"
+              onclick="setFilter('video');showView('photosView')">
+        <div class="ci">▶️</div>
+        <b>Videos</b>
+        <small id="videoCard">0 videos</small>
+        <img class="mini-logo" id="ml5">
+      </button>
+
+      <button class="card"
+              onclick="setFilter('screenshot');showView('photosView')">
+        <div class="ci">📱</div>
+        <b>Screenshots</b>
+        <small>Imported screenshots</small>
+        <img class="mini-logo" id="ml6">
+      </button>
+
+      <button class="card"
+              onclick="shareAll()">
+        <div class="ci">🔗</div>
+        <b>Share</b>
+        <small>Share photos</small>
+        <img class="mini-logo" id="ml7">
+      </button>
+
+      <button class="card"
+              onclick="openNearby()">
+        <div class="ci">📡</div>
+        <b>Nearby</b>
+        <small>Transfer files</small>
+        <img class="mini-logo" id="ml8">
+      </button>
+
+    </div>
+
+    <div class="section-title">
+      <span>Recent Photos</span>
+      <button onclick="showView('photosView')">See All</button>
+    </div>
+
+    <div id="recentGrid" class="photo-grid"></div>
+
+  </main>
+</section>
+
+
+<!-- PHOTOS -->
+<section id="photosView" class="view">
+
+  <div class="status">
+    <span>9:41</span>
+    <span>●●● Wi-Fi ▰</span>
+  </div>
+
+  <div class="backbar">
+    <button onclick="showView('home')">‹</button>
+    <h2>All Photos</h2>
+    <button onclick="fileInput.click()">＋</button>
+  </div>
+
+  <div class="content">
+
+    <div class="search">
+      <span>⌕</span>
+      <input placeholder="Search photos..."
+             oninput="homeSearch.value=this.value;renderGallery()">
+    </div>
+
+    <div class="section-title">
+      <span id="photoTitle">All media</span>
+      <button onclick="clearFilter()">All</button>
+    </div>
+
+    <div id="galleryGrid" class="photo-grid"></div>
+
+    <div id="empty" class="empty">
+      No photos yet.<br>
+      Tap ＋ to import photos or use Camera.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ALBUMS -->
+<section id="albumsView" class="view">
+
+  <div class="status">
+    <span>9:41</span>
+    <span>●●● Wi-Fi ▰</span>
+  </div>
+
+  <div class="backbar">
+    <button onclick="showView('home')">‹</button>
+    <h2>Albums</h2>
+    <button onclick="toast('Album creation coming next')">＋</button>
+  </div>
+
+  <div id="albumList" class="list"></div>
+
+</section>
+
+
+<!-- FAVORITES -->
+<section id="favoritesView" class="view">
+
+  <div class="status">
+    <span>9:41</span>
+    <span>●●● Wi-Fi ▰</span>
+  </div>
+
+  <div class="backbar">
+    <button onclick="showView('home')">‹</button>
+    <h2>Favorites</h2>
+    <button>♡</button>
+  </div>
+
+  <div class="content">
+
+    <div id="favGrid" class="photo-grid"></div>
+
+    <div id="favEmpty" class="empty">
+      No favorites yet.<br>
+      Tap the ☆ on a photo to add it.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SEARCH -->
+<section id="searchView" class="view">
+
+  <div class="status">
+    <span>9:41</span>
+    <span>●●● Wi-Fi ▰</span>
+  </div>
+
+  <div class="backbar">
+    <button onclick="showView('home')">‹</button>
+    <h2>Search</h2>
+    <button>⌕</button>
+  </div>
+
+  <div class="content">
+
+    <div class="search">
+      <span>⌕</span>
+      <input id="searchBox"
+             placeholder="Search your gallery..."
+             oninput="homeSearch.value=this.value;showView('photosView');renderGallery()">
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SETTINGS -->
+<section id="settingsView" class="view">
+
+  <div class="status">
+    <span>9:41</span>
+    <span>●●● Wi-Fi ▰</span>
+  </div>
+
+  <div class="backbar">
+    <button onclick="showView('home')">‹</button>
+    <h2>Settings</h2>
+    <button>⋯</button>
+  </div>
+
+  <div class="list">
+
+    <div class="welcome">
+      <img id="logo3">
+      <div>
+        <b>EVR Photo Gallery</b>
+        <p>Simple HTML Gallery</p>
+      </div>
+    </div>
+
+    <div class="album">
+      <span>🔐</span>
+      <div>
+        <b>Local Storage</b>
+        <small>Photos stay in this browser</small>
+      </div>
+    </div>
+
+    <div class="album">
+      <span>📊</span>
+      <div>
+        <b>Storage Usage</b>
+        <small id="storageInfo">0 MB</small>
+      </div>
+    </div>
+
+    <div class="album"
+         onclick="backupGallery()"
+         style="cursor:pointer">
+      <span>💾</span>
+      <div>
+        <b>Backup Gallery</b>
+        <small>Save all EVR media to a backup</small>
+      </div>
+      <span style="margin-left:auto">›</span>
+    </div>
+
+    <div class="album"
+         onclick="restoreInput.click()"
+         style="cursor:pointer">
+      <span>♻️</span>
+      <div>
+        <b>Restore Gallery</b>
+        <small>Restore from EVR backup</small>
+      </div>
+      <span style="margin-left:auto">›</span>
+    </div>
+
+    <div class="album">
+      <span>📤</span>
+      <div>
+        <b>Share</b>
+        <small>Use the device share sheet</small>
+      </div>
+    </div>
+
+    <div class="album">
+      <span>ℹ️</span>
+      <div>
+        <b>About EVR</b>
+        <small>EVR Photo Gallery v1.0</small>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom">
+
+  <button class="nav active"
+          onclick="showView('home',this)">
+    <span class="nicon">⌂</span>
+    Home
+  </button>
+
+  <button class="nav"
+          onclick="showView('photosView',this)">
+    <span class="nicon">▧</span>
+    Photos
+  </button>
+
+  <button class="nav"
+          onclick="showView('albumsView',this)">
+    <span class="nicon">▱</span>
+    Albums
+  </button>
+
+  <button class="nav"
+          onclick="showView('favoritesView',this)">
+    <span class="nicon">☆</span>
+    Favorites
+  </button>
+
+  <button class="nav"
+          onclick="showView('settingsView',this)">
+    <span class="nicon">•••</span>
+    More
+  </button>
+
+</nav>
+
+</div>
+
+
+<!-- VIEWER -->
+<div id="viewer" class="viewer">
+
+  <div class="vtop">
+
+    <button class="viewerBack"
+            onclick="closeViewer()"
+            aria-label="Back to gallery">
+      ‹
+    </button>
+
+    <span id="vtitle"
+          style="
+          flex:1;
+          text-align:center;
+          font-weight:700;
+          font-size:15px;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          white-space:nowrap">
+      Photo
+    </span>
+
+    <button onclick="deleteCurrent()"
+            aria-label="Delete">
+      🗑
+    </button>
+
+  </div>
+
+  <div id="vmedia" class="vmedia"></div>
+
+  <div class="vbottom">
+
+    <button class="viewerBottomBack"
+            onclick="closeViewer()">
+      ‹
+      <span>Back</span>
+    </button>
+
+    <button onclick="shareCurrent()">
+      ⌯
+      <span>Share</span>
+    </button>
+
+    <button onclick="saveCurrent()">
+      ⇩
+      <span>Save</span>
+    </button>
+
+    <button onclick="toggleFavoriteCurrent()">
+      ☆
+      <span>Favorite</span>
+    </button>
+
+    <button onclick="deleteCurrent()">
+      ⌫
+      <span>Delete</span>
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- NEARBY -->
+<div id="nearby"
+     class="modal"
+     onclick="if(event.target===this)closeNearby()">
+
+  <div class="sheet">
+
+    <h2>EVR Nearby Transfer</h2>
+
+    <div style="
+      text-align:center;
+      font-size:48px">
+      📡
+    </div>
+
+    <p style="
+      text-align:center;
+      color:#63809d">
+      Send or receive photos with nearby devices.
+    </p>
+
+    <button class="action primary"
+            onclick="shareAll()">
+      ↗ Send Photos
+    </button>
+
+    <button class="action"
+            onclick="toast('Receive mode needs a compatible server or app')">
+      ⇩ Receive Photos
+    </button>
+
+    <button class="action"
+            onclick="closeNearby()">
+      Cancel
+    </button>
+
+  </div>
+</div>
+
+
+<input id="fileInput"
+       type="file"
+       accept="image/*,video/*"
+       multiple
+       hidden>
+
+<input id="cameraInput"
+       type="file"
+       accept="image/*"
+       capture="environment"
+       hidden>
+
+<input id="restoreInput"
+       type="file"
+       accept=".evrbackup,.json,application/json"
+       hidden>
+
+<div id="toast"></div>
+
+
+<script>
+
+/* ============================================
+   EVR ICON
+============================================ */
+
+function svgLogo(){
+
+  const svg =
+    document.getElementById("evrIconSvg")
+    .outerHTML
+    .replace('style="display:none"','');
+
+  return "data:image/svg+xml;charset=UTF-8," +
+    encodeURIComponent(svg);
+}
+
+function setLogos(){
+
+  const logo = svgLogo();
+
+  [
+    "logo",
+    "logo2",
+    "logo3",
+    "ml1",
+    "ml2",
+    "ml3",
+    "ml4",
+    "ml5",
+    "ml6",
+    "ml7",
+    "ml8"
+  ].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.src=logo;
+  });
+
+}
+
+
+/* ============================================
+   DATABASE
+============================================ */
+
+let db;
+let items=[];
+let currentId=null;
+let filter="all";
+
+function openDB(){
+
+  return new Promise((resolve,reject)=>{
+
+    const request=
+      indexedDB.open("EVR_Photo_Gallery",1);
+
+    request.onupgradeneeded=e=>{
+
+      const database=e.target.result;
+
+      if(!database.objectStoreNames.contains("media")){
+
+        database.createObjectStore(
+          "media",
+          {
+            keyPath:"id",
+            autoIncrement:true
+          }
+        );
+
+      }
+
+    };
+
+    request.onsuccess=e=>{
+      db=e.target.result;
+      resolve();
+    };
+
+    request.onerror=()=>{
+      reject(request.error);
+    };
+
+  });
+}
+
+
+function getAll(){
+
+  return new Promise((resolve,reject)=>{
+
+    const request=
+      db
+      .transaction("media")
+      .objectStore("media")
+      .getAll();
+
+    request.onsuccess=()=>{
+      resolve(request.result);
+    };
+
+    request.onerror=()=>{
+      reject(request.error);
+    };
+
+  });
+
+}
+
+
+function addFile(file){
+
+  return new Promise((resolve,reject)=>{
+
+    const transaction=
+      db.transaction("media","readwrite");
+
+    const store=
+      transaction.objectStore("media");
+
+    const request=
+      store.add({
+        name:file.name || "EVR Photo",
+        type:file.type,
+        blob:file,
+        created:Date.now(),
+        favorite:false
+      });
+
+    request.onsuccess=()=>{
+      resolve(request.result);
+    };
+
+    request.onerror=()=>{
+      reject(request.error);
+    };
+
+  });
+
+}
+
+
+/* ============================================
+   REFRESH
+============================================ */
+
+async function refresh(){
+
+  items=await getAll();
+
+  renderGallery();
+  renderRecent();
+  renderFavorites();
+  renderAlbums();
+  updateStats();
+
+}
+
+
+function updateStats(){
+
+  const videos=
+    items.filter(
+      x=>x.type.startsWith("video/")
+    ).length;
+
+  const favorites=
+    items.filter(
+      x=>x.favorite
+    ).length;
+
+  document.getElementById("countCard")
+    .textContent=
+    items.length+" photos";
+
+  document.getElementById("videoCard")
+    .textContent=
+    videos+" videos";
+
+  document.getElementById("favCard")
+    .textContent=
+    favorites+" photos";
+
+  const bytes=
+    items.reduce(
+      (total,x)=>
+      total+(x.blob?.size||0),
+      0
+    );
+
+  document.getElementById("storageInfo")
+    .textContent=
+    (bytes/1048576).toFixed(2)+" MB";
+}
+
+
+/* ============================================
+   FILTERING
+============================================ */
+
+function matchItem(x){
+
+  const search=
+    (
+      document
+      .getElementById("homeSearch")
+      .value||""
+    )
+    .toLowerCase()
+    .trim();
+
+  if(
+    search &&
+    !x.name.toLowerCase().includes(search)
+  ){
+    return false;
+  }
+
+  if(filter==="video"){
+    return x.type.startsWith("video/");
+  }
+
+  if(filter==="photo"){
+    return x.type.startsWith("image/");
+  }
+
+  if(filter==="favorite"){
+    return x.favorite;
+  }
+
+  if(filter==="screenshot"){
+    return /screenshot|screen.?shot/i
+      .test(x.name);
+  }
+
+  return true;
+}
+
+
+/* ============================================
+   PHOTO HTML
+============================================ */
+
+function cardHTML(x){
+
+  const url=
+    URL.createObjectURL(x.blob);
+
+  const video=
+    x.type.startsWith("video/");
+
+  return `
+    <div class="thumb"
+         onclick="openViewer(${x.id})">
+
+      <${video?"video":"img"}
+        src="${url}"
+        ${video?"muted playsinline":""}>
+      </${video?"video":"img"}>
+
+      ${
+        x.favorite
+        ? `<span class="star">⭐</span>`
+        : ""
+      }
+
+      ${
+        video
+        ? `<span class="play">▶</span>`
+        : ""
+      }
+
+    </div>
+  `;
+}
+
+
+/* ============================================
+   RENDER
+============================================ */
+
+function renderGallery(){
+
+  const list=
+    items
+    .filter(matchItem)
+    .sort(
+      (a,b)=>b.created-a.created
+    );
+
+  document.getElementById("galleryGrid")
+    .innerHTML=
+    list.map(cardHTML).join("");
+
+  document.getElementById("empty")
+    .classList
+    .toggle(
+      "hidden",
+      list.length>0
+    );
+
+  document.getElementById("photoTitle")
+    .textContent=
+    filter==="all"
+      ? "All media"
+      : filter.charAt(0).toUpperCase()
+        +filter.slice(1);
+
+}
+
+
+function renderRecent(){
+
+  const list=
+    [...items]
+    .sort(
+      (a,b)=>b.created-a.created
+    )
+    .slice(0,6);
+
+  document.getElementById("recentGrid")
+    .innerHTML=
+    list.map(cardHTML).join("");
+
+}
+
+
+function renderFavorites(){
+
+  const list=
+    items.filter(
+      x=>x.favorite
+    );
+
+  document.getElementById("favGrid")
+    .innerHTML=
+    list.map(cardHTML).join("");
+
+  document.getElementById("favEmpty")
+    .classList
+    .toggle(
+      "hidden",
+      list.length>0
+    );
+
+}
+
+
+function renderAlbums(){
+
+  const defs=[
+    ["Camera","photo"],
+    ["Screenshots","screenshot"],
+    ["Favorites","favorite"],
+    ["Videos","video"],
+    ["All Photos","all"]
+  ];
+
+  document.getElementById("albumList")
+    .innerHTML=
+    defs.map(([name,type])=>{
+
+      let count=0;
+
+      if(type==="photo"){
+        count=
+          items.filter(
+            x=>x.type.startsWith("image/")
+          ).length;
+      }
+
+      if(type==="video"){
+        count=
+          items.filter(
+            x=>x.type.startsWith("video/")
+          ).length;
+      }
+
+      if(type==="favorite"){
+        count=
+          items.filter(
+            x=>x.favorite
+          ).length;
+      }
+
+      if(type==="screenshot"){
+        count=
+          items.filter(
+            x=>/screenshot|screen.?shot/i
+              .test(x.name)
+          ).length;
+      }
+
+      if(type==="all"){
+        count=items.length;
+      }
+
+      const first=
+        items.find(
+          x=>type==="all"
+            ? true
+            : type==="favorite"
+              ? x.favorite
+              : type==="video"
+                ? x.type.startsWith("video/")
+                : type==="screenshot"
+                  ? /screenshot|screen.?shot/i
+                    .test(x.name)
+                  : x.type.startsWith("image/")
+        );
+
+      return `
+        <div class="album"
+             onclick="filter='${type}';
+                      showView('photosView');
+                      renderGallery()">
+
+          ${
+            first
+            ? `<img src="${URL.createObjectURL(first.blob)}">`
+            : `<div style="
+                width:52px;
+                height:52px;
+                border-radius:9px;
+                background:#d9efff;
+                display:grid;
+                place-items:center;
+                font-size:25px">
+                📁
+              </div>`
+          }
+
+          <div>
+            <b>${name}</b>
+            <small>${count} items</small>
+          </div>
+
+          <span style="margin-left:auto">›</span>
+
+        </div>
+      `;
+
+    }).join("");
+
+}
+
+
+/* ============================================
+   VIEWER
+============================================ */
+
+async function openViewer(id){
+
+  currentId=id;
+
+  const item=
+    items.find(
+      x=>x.id===id
+    );
+
+  if(!item)return;
+
+  document.getElementById("vtitle")
+    .textContent=
+    item.name;
+
+  const url=
+    URL.createObjectURL(item.blob);
+
+  document.getElementById("vmedia")
+    .innerHTML=
+    item.type.startsWith("video/")
+      ?
+      `<video
+        src="${url}"
+        controls
+        autoplay
+        playsinline>
+      </video>`
+      :
+      `<img src="${url}">`;
+
+  document.getElementById("viewer")
+    .classList
+    .add("open");
+
+}
+
+
+function closeViewer(){
+
+  document.getElementById("viewer")
+    .classList
+    .remove("open");
+
+  document.getElementById("vmedia")
+    .innerHTML="";
+
+  currentId=null;
+
+}
+
+
+/* ============================================
+   FAVORITE
+============================================ */
+
+function toggleFavoriteCurrent(){
+
+  const item=
+    items.find(
+      x=>x.id===currentId
+    );
+
+  if(!item)return;
+
+  item.favorite=
+    !item.favorite;
+
+  const tx=
+    db.transaction(
+      "media",
+      "readwrite"
+    );
+
+  tx.objectStore("media")
+    .put(item);
+
+  tx.oncomplete=()=>{
+
+    refresh();
+
+    toast(
+      item.favorite
+        ? "Added to Favorites"
+        : "Removed from Favorites"
+    );
+
+  };
+
+}
+
+
+/* ============================================
+   DELETE
+============================================ */
+
+function deleteCurrent(){
+
+  if(!currentId)return;
+
+  if(
+    !confirm(
+      "Delete this item from EVR Gallery?"
+    )
+  ){
+    return;
+  }
+
+  const tx=
+    db.transaction(
+      "media",
+      "readwrite"
+    );
+
+  tx.objectStore("media")
+    .delete(currentId);
+
+  tx.oncomplete=()=>{
+
+    closeViewer();
+
+    refresh();
+
+    toast("Deleted");
+
+  };
+
+}
+
+
+/* ============================================
+   SAVE
+============================================ */
+
+function saveCurrent(){
+
+  const item=
+    items.find(
+      x=>x.id===currentId
+    );
+
+  if(!item)return;
+
+  const a=
+    document.createElement("a");
+
+  a.href=
+    URL.createObjectURL(item.blob);
+
+  a.download=
+    item.name || "EVR-photo";
+
+  a.click();
+
+  toast("Save started");
+
+}
+
+
+/* ============================================
+   SHARE
+============================================ */
+
+async function shareCurrent(){
+
+  const item=
+    items.find(
+      x=>x.id===currentId
+    );
+
+  if(!item)return;
+
+  const file=
+    new File(
+      [item.blob],
+      item.name || "EVR-photo",
+      {
+        type:item.type
+      }
+    );
+
+  if(
+    navigator.share &&
+    (
+      !navigator.canShare ||
+      navigator.canShare({
+        files:[file]
+      })
+    )
+  ){
+
+    try{
+
+      await navigator.share({
+        title:"EVR Photo Gallery",
+        files:[file]
+      });
+
+    }catch(e){}
+
+  }else{
+
+    toast(
+      "Sharing is not supported here"
+    );
+
+  }
+
+}
+
+
+async function shareAll(){
+
+  if(!items.length){
+
+    toast(
+      "No photos to share"
+    );
+
+    return;
+
+  }
+
+  const selected=
+    items.slice(0,10);
+
+  const files=
+    selected.map(
+      x=>
+      new File(
+        [x.blob],
+        x.name || "EVR-photo",
+        {type:x.type}
+      )
+    );
+
+  if(
+    navigator.share &&
+    (
+      !navigator.canShare ||
+      navigator.canShare({
+        files
+      })
+    )
+  ){
+
+    try{
+
+      await navigator.share({
+        title:"EVR Photo Gallery",
+        text:"Shared from EVR Photo Gallery",
+        files
+      });
+
+    }catch(e){}
+
+  }else{
+
+    toast(
+      "Open this page in a supported browser"
+    );
+
+  }
+
+}
+
+
+/* ============================================
+   BACKUP
+============================================ */
+
+function blobToBase64(blob){
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const reader=
+        new FileReader();
+
+      reader.onload=()=>{
+        resolve(
+          reader.result.split(",")[1]
+        );
+      };
+
+      reader.onerror=()=>{
+        reject(reader.error);
+      };
+
+      reader.readAsDataURL(blob);
+
+    }
+  );
+
+}
+
+
+function base64ToBlob(data,type){
+
+  const binary=
+    atob(data);
+
+  const length=
+    binary.length;
+
+  const array=
+    new Uint8Array(length);
+
+  for(
+    let i=0;
+    i<length;
+    i++
+  ){
+    array[i]=
+      binary.charCodeAt(i);
+  }
+
+  return new Blob(
+    [array],
+    {
+      type:type||
+      "application/octet-stream"
+    }
+  );
+
+}
+
+
+async function backupGallery(){
+
+  if(!items.length){
+
+    toast(
+      "There are no photos to back up"
+    );
+
+    return;
+
+  }
+
+  try{
+
+    toast(
+      "Preparing backup..."
+    );
+
+    const backupItems=[];
+
+    for(
+      const item of items
+    ){
+
+      backupItems.push({
+
+        name:item.name,
+        type:item.type,
+        created:item.created,
+        favorite:!!item.favorite,
+
+        data:
+          await blobToBase64(
+            item.blob
+          )
+
+      });
+
+    }
+
+    const backup={
+
+      format:
+        "EVR Photo Gallery Backup",
+
+      version:1,
+
+      created:
+        new Date().toISOString(),
+
+      count:
+        backupItems.length,
+
+      items:
+        backupItems
+
+    };
+
+    const blob=
+      new Blob(
+        [
+          JSON.stringify(backup)
+        ],
+        {
+          type:"application/json"
+        }
+      );
+
+    const url=
+      URL.createObjectURL(blob);
+
+    const a=
+      document.createElement("a");
+
+    a.href=url;
+
+    a.download=
+      "EVR-Photo-Gallery-Backup-"+
+      new Date()
+      .toISOString()
+      .slice(0,10)+
+      ".evrbackup";
+
+    a.click();
+
+    setTimeout(
+      ()=>{
+        URL.revokeObjectURL(url);
+      },
+      2000
+    );
+
+    toast(
+      "Backup saved"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Backup failed"
+    );
+
+  }
+
+}
+
+
+/* ============================================
+   RESTORE
+============================================ */
+
+function putRestoredItem(data){
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const tx=
+        db.transaction(
+          "media",
+          "readwrite"
+        );
+
+      const request=
+        tx.objectStore("media")
+          .add(data);
+
+      request.onsuccess=()=>{
+        resolve();
+      };
+
+      request.onerror=()=>{
+        reject(request.error);
+      };
+
+    }
+  );
+
+}
+
+
+async function restoreGallery(file){
+
+  if(!file)return;
+
+  try{
+
+    toast(
+      "Reading backup..."
+    );
+
+    const text=
+      await file.text();
+
+    const backup=
+      JSON.parse(text);
+
+    if(
+      backup.format!==
+        "EVR Photo Gallery Backup" ||
+      !Array.isArray(
+        backup.items
+      )
+    ){
+
+      throw new Error(
+        "Invalid EVR backup"
+      );
+
+    }
+
+    let count=0;
+
+    for(
+      const item of backup.items
+    ){
+
+      await putRestoredItem({
+
+        name:
+          item.name ||
+          "EVR Photo",
+
+        type:
+          item.type ||
+          "application/octet-stream",
+
+        blob:
+          base64ToBlob(
+            item.data,
+            item.type
+          ),
+
+        created:
+          item.created ||
+          Date.now(),
+
+        favorite:
+          !!item.favorite
+
+      });
+
+      count++;
+
+    }
+
+    await refresh();
+
+    toast(
+      "Restored "+
+      count+
+      " item"+
+      (count===1?"":"s")
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Restore failed"
+    );
+
+  }
+
+}
+
+
+/* ============================================
+   FILTERS
+============================================ */
+
+function setFilter(value){
+
+  filter=value;
+
+}
+
+
+function clearFilter(){
+
+  filter="all";
+
+  renderGallery();
+
+}
+
+
+function showFavorites(){
+
+  filter="favorite";
+
+  showView(
+    "favoritesView"
+  );
+
+  renderFavorites();
+
+}
+
+
+/* ============================================
+   NAVIGATION
+============================================ */
+
+function showView(id,button){
+
+  document
+    .querySelectorAll(".view")
+    .forEach(
+      view=>
+      view.classList.remove("active")
+    );
+
+  const target=
+    document.getElementById(id);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  if(button){
+
+    document
+      .querySelectorAll(".nav")
+      .forEach(
+        nav=>
+        nav.classList.remove("active")
+      );
+
+    button.classList.add("active");
+
+  }
+
+  if(id==="photosView"){
+    renderGallery();
+  }
+
+  if(id==="albumsView"){
+    renderAlbums();
+  }
+
+  if(id==="favoritesView"){
+    renderFavorites();
+  }
+
+}
+
+
+/* ============================================
+   NEARBY
+============================================ */
+
+function openNearby(){
+
+  document
+    .getElementById("nearby")
+    .classList
+    .add("open");
+
+}
+
+
+function closeNearby(){
+
+  document
+    .getElementById("nearby")
+    .classList
+    .remove("open");
+
+}
+
+
+/* ============================================
+   TOAST
+============================================ */
+
+function toast(message){
+
+  const element=
+    document.getElementById("toast");
+
+  element.textContent=
+    message;
+
+  element.style.opacity="1";
+
+  element.style.transform=
+    "translateX(-50%) translateY(0)";
+
+  clearTimeout(
+    window.evrToastTimer
+  );
+
+  window.evrToastTimer=
+    setTimeout(
+      ()=>{
+        element.style.opacity="0";
+        element.style.transform=
+          "translateX(-50%) translateY(20px)";
+      },
+      2200
+    );
+
+}
+
+
+/* ============================================
+   INPUTS
+============================================ */
+
+document
+  .getElementById("fileInput")
+  .addEventListener(
+    "change",
+    async event=>{
+
+      for(
+        const file of event.target.files
+      ){
+
+        await addFile(file);
+
+      }
+
+      event.target.value="";
+
+      await refresh();
+
+      toast(
+        "Photos imported into EVR"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById("cameraInput")
+  .addEventListener(
+    "change",
+    async event=>{
+
+      for(
+        const file of event.target.files
+      ){
+
+        await addFile(file);
+
+      }
+
+      event.target.value="";
+
+      await refresh();
+
+      toast(
+        "Camera photo added"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById("restoreInput")
+  .addEventListener(
+    "change",
+    async event=>{
+
+      await restoreGallery(
+        event.target.files[0]
+      );
+
+      event.target.value="";
+
+    }
+  );
+
+
+/* ============================================
+   CLOCK
+============================================ */
+
+function updateClock(){
+
+  const text=
+    new Date()
+      .toLocaleTimeString(
+        [],
+        {
+          hour:"2-digit",
+          minute:"2-digit"
+        }
+      )
+      .replace(/^0/,"");
+
+  const clock=
+    document.getElementById(
+      "clock"
+    );
+
+  if(clock){
+    clock.textContent=text;
+  }
+
+}
+
+setInterval(
+  updateClock,
+  1000
+);
+
+
+/* ============================================
+   START
+============================================ */
+
+(async function(){
+
+  try{
+
+    setLogos();
+
+    await openDB();
+
+    await refresh();
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "EVR storage could not be opened"
+    );
+
+  }
+
+})();
+
+</script>
+
+</body>
+</html>
