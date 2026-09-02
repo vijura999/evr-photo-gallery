@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#06152d">
+<meta name="theme-color" content="#dff1ff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>EVR Photo Gallery</title>
@@ -51,7 +51,7 @@ button{cursor:pointer}
 .backbar{height:66px;display:flex;align-items:center;gap:12px;padding:10px 15px;border-bottom:1px solid #12345c;background:#04152d}
 .backbar h2{font-size:17px;margin:0;flex:1;text-align:center}.backbar button{background:none;border:0;color:#fff;font-size:22px}
 .list{padding:12px 14px 100px}.album{display:flex;align-items:center;gap:12px;background:#082553;border:1px solid #164b80;border-radius:13px;padding:8px;margin-bottom:8px}.album img{width:52px;height:52px;object-fit:cover;border-radius:9px}.album b{display:block}.album small{color:#91add1}
-.viewer{position:fixed;z-index:100;inset:0;background:#000;display:none;flex-direction:column}.viewer.open{display:flex}.vtop{height:68px;padding:10px 15px;display:flex;align-items:center;gap:12px;justify-content:space-between;background:#06172df2;border-bottom:1px solid #173e69}.vtop button,.vbottom button{background:none;border:0;color:#fff;font-size:24px}.vmedia{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden}.vmedia img,.vmedia video{max-width:100%;max-height:100%;object-fit:contain}.vbottom{height:86px;display:flex;justify-content:space-around;align-items:center;background:#06172df2}.vbottom span{display:block;font-size:10px;margin-top:4px}
+.viewer{position:fixed;z-index:100;inset:0;background:#000;display:none;flex-direction:column}.viewer.open{display:flex}.vtop{height:72px;padding:10px 15px;display:flex;align-items:center;gap:12px;justify-content:flex-start;background:#06172df2;border-bottom:1px solid #173e69;position:relative;z-index:3}.vtop button,.vbottom button{background:none;border:0;color:#fff;font-size:24px}.vmedia{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden}.vmedia img,.vmedia video{max-width:100%;max-height:100%;object-fit:contain}.vbottom{height:86px;display:flex;justify-content:space-around;align-items:center;background:#06172df2}.vbottom span{display:block;font-size:10px;margin-top:4px}
 .modal{position:fixed;z-index:110;inset:0;background:#0009;display:none;align-items:flex-end}.modal.open{display:flex}.sheet{width:100%;max-width:520px;margin:auto;background:#071d3c;border:1px solid #1a4e86;border-radius:24px 24px 0 0;padding:22px 18px 30px}.sheet h2{text-align:center;margin:0 0 15px}.sheet button.action{width:100%;height:52px;margin:6px 0;border:0;border-radius:14px;background:#0d3c7b;color:#fff;font-weight:700}.sheet button.primary{background:linear-gradient(90deg,#0d9cff,#285cff)}
 .empty{padding:40px 10px;text-align:center;color:#8ea8ca}.hidden{display:none!important}
 @media(min-width:700px){.app{min-height:900px;margin:20px 0;border-radius:28px;box-shadow:0 20px 80px #0008}.bottom{position:absolute;border-radius:0 0 28px 28px}}
@@ -61,6 +61,147 @@ button{cursor:pointer}
 <link rel="apple-touch-icon" sizes="180x180" href="evr-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="EVR Gallery">
+
+
+<style>
+/* EVR Light Blue Theme */
+:root{
+  --bg:#eaf6ff;
+  --panel:#ffffff;
+  --panel2:#dff1ff;
+  --line:#b8dcf6;
+  --blue:#0d9fe8;
+  --blue2:#2867e8;
+  --gold:#d59d00;
+  --text:#0b2542;
+  --muted:#5e7896;
+}
+body{
+  background:#dcefff;
+  color:var(--text);
+}
+.app{
+  background:
+    radial-gradient(circle at 50% -10%,#ffffff 0,#eef8ff 31%,#dff1ff 75%);
+}
+.status{color:#496581}
+.top{
+  background:linear-gradient(180deg,#f8fcff,#eaf6ff);
+}
+.brand b{color:#082b53}
+.brand span{color:#597796}
+.iconbtn{
+  background:#f4fbff;
+  border:1px solid #b9dbf2;
+  color:#145184;
+  box-shadow:0 5px 16px #78afd433;
+}
+.search{
+  background:#ffffff;
+  border:1px solid #b9dbf2;
+  color:#6d89a7;
+  box-shadow:0 5px 16px #78afd426;
+}
+.search input{color:#143453}
+.welcome{
+  background:linear-gradient(135deg,#ffffff,#dff2ff);
+  border:1px solid #a9d5f4;
+  box-shadow:0 10px 25px #6faedc33;
+}
+.welcome p,.card small{color:#5f7c9b}
+.card{
+  background:linear-gradient(145deg,#ffffff,#e5f4ff);
+  border:1px solid #acd5f1;
+  color:#0b2d50;
+  box-shadow:inset 0 1px #fff,0 8px 20px #6faedc2b;
+}
+.card:after{background:#16a8ff16}
+.card .mini-logo{filter:drop-shadow(0 2px 4px #4b87ad33)}
+.section-title{color:#12385d}
+.section-title span{color:#64809e}
+.section-title button{color:#087fc1}
+.thumb{
+  border:1px solid #acd2ec;
+  box-shadow:0 4px 12px #6faedc22;
+}
+.bottom{
+  background:#f5fbffff;
+  border-top:1px solid #b8d9ef;
+  box-shadow:0 -8px 25px #639dc426;
+}
+.nav{color:#6683a0}
+.nav.active{color:#0a9eea}
+.backbar{
+  background:#eef8ff;
+  border-bottom:1px solid #b8d9ef;
+  color:#12385d;
+}
+.backbar button{color:#174873}
+.list{background:transparent}
+.album{
+  background:linear-gradient(135deg,#ffffff,#e7f5ff);
+  border:1px solid #b1d8ef;
+  color:#12385d;
+  box-shadow:0 5px 16px #76aed127;
+}
+.album small{color:#64819f}
+.empty{color:#6885a2}
+.sheet{
+  background:#f4fbff;
+  border:1px solid #acd4ee;
+  color:#12385d;
+}
+.sheet p{color:#63809d!important}
+.sheet button.action{
+  background:#dcefff;
+  color:#134a76;
+  border:1px solid #b4d9f1;
+}
+.sheet button.primary{
+  background:linear-gradient(90deg,#0ca8ee,#2b68ee);
+  color:#fff;
+  border:0;
+}
+.vtop,.vbottom{
+  background:#071a31f5;
+}
+#toast{
+  background:#ffffff!important;
+  color:#103958!important;
+  border:1px solid #abd4ed!important;
+  box-shadow:0 8px 24px #4b82aa35!important;
+}
+</style>
+
+
+<style>
+.viewerBack{
+  width:52px!important;
+  height:52px!important;
+  min-width:52px!important;
+  border:1px solid #4da6df!important;
+  border-radius:15px!important;
+  background:linear-gradient(145deg,#0d3b70,#08264d)!important;
+  color:#ffffff!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:38px!important;
+  line-height:1!important;
+  font-weight:300!important;
+  box-shadow:0 4px 14px #0007!important;
+  -webkit-tap-highlight-color:transparent;
+}
+.viewerBack:active{transform:scale(.95)}
+.viewerBack:after{
+  content:"Back";
+  font-size:10px;
+  font-weight:700;
+  position:absolute;
+  left:68px;
+  color:#d7ebff;
+}
+</style>
 
 </head>
 <body>
@@ -128,6 +269,8 @@ button{cursor:pointer}
       <div class="welcome"><img id="logo3"><div><b>EVR Photo Gallery</b><p>Simple HTML Gallery</p></div></div>
       <div class="album"><span>🔐</span><div><b>Local Storage</b><small>Photos stay in this browser</small></div></div>
       <div class="album"><span>📊</span><div><b>Storage Usage</b><small id="storageInfo">0 MB</small></div></div>
+      <div class="album" onclick="backupGallery()" style="cursor:pointer"><span>💾</span><div><b>Backup Gallery</b><small>Save all EVR photos to a backup file</small></div><span style="margin-left:auto">›</span></div>
+      <div class="album" onclick="document.getElementById('restoreInput').click()" style="cursor:pointer"><span>♻️</span><div><b>Restore Gallery</b><small>Restore photos from an EVR backup</small></div><span style="margin-left:auto">›</span></div>
       <div class="album"><span>📤</span><div><b>Share</b><small>Use the device share sheet</small></div></div>
       <div class="album"><span>ℹ️</span><div><b>About EVR</b><small>EVR Photo Gallery v1.0</small></div></div>
     </div>
@@ -144,9 +287,10 @@ button{cursor:pointer}
 
 <input id="fileInput" type="file" accept="image/*,video/*" multiple hidden>
 <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden>
+<input id="restoreInput" type="file" accept=".evrbackup,.json,application/json" hidden>
 
 <div id="viewer" class="viewer">
-  <div class="vtop"><button onclick="closeViewer(true)" aria-label="Back" style="width:46px;height:46px;border:1px solid #2b6da8;border-radius:13px;background:#0a2a55;color:#fff;font-size:32px;line-height:1">‹</button><span id="vtitle">Photo</span><button onclick="deleteCurrent()">🗑</button></div>
+  <div class="vtop"><button onclick="closeViewer(true)" aria-label="Back to gallery" title="Back to gallery" class="viewerBack">‹</button><span id="vtitle" style="flex:1;text-align:center;font-weight:700;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Photo</span><button onclick="deleteCurrent()" aria-label="Delete photo" title="Delete photo" style="margin-left:auto">🗑</button></div>
   <div id="vmedia" class="vmedia"></div>
   <div class="vbottom"><button onclick="shareCurrent()">⌯<span>Share</span></button><button onclick="saveCurrent()">⇩<span>Save</span></button><button onclick="toggleFavoriteCurrent()">☆<span>Favorite</span></button><button onclick="deleteCurrent()">⌫<span>Delete</span></button></div>
 </div>
@@ -240,6 +384,87 @@ try{await navigator.share({title:'EVR Photo Gallery',text:'Shared from EVR Photo
 }else toast('Open this page over HTTPS on a supported phone browser to use Share.')
 }
 function saveCurrent(){let x=items.find(i=>i.id===currentId);if(!x)return;let a=document.createElement('a');a.href=URL.createObjectURL(x.blob);a.download=x.name||'EVR-photo';a.click();toast('Save started')}
+
+function bytesToBase64(blob){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(reader.result.split(',')[1]);
+    reader.onerror=()=>reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+function base64ToBlob(base64,type){
+  const bin=atob(base64),len=bin.length,arr=new Uint8Array(len);
+  for(let i=0;i<len;i++)arr[i]=bin.charCodeAt(i);
+  return new Blob([arr],{type:type||'application/octet-stream'});
+}
+async function backupGallery(){
+  if(!items.length){toast('There are no photos to back up');return}
+  try{
+    toast('Preparing backup…');
+    const records=[];
+    for(const x of items){
+      records.push({
+        id:x.id,name:x.name,type:x.type,created:x.created,favorite:!!x.favorite,
+        data:await bytesToBase64(x.blob)
+      });
+    }
+    const backup={
+      format:'EVR Photo Gallery Backup',
+      version:1,
+      created:new Date().toISOString(),
+      count:records.length,
+      items:records
+    };
+    const blob=new Blob([JSON.stringify(backup)],{type:'application/json'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='EVR-Photo-Gallery-Backup-'+new Date().toISOString().slice(0,10)+'.evrbackup';
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+    toast('Backup saved');
+  }catch(e){
+    console.error(e);
+    toast('Backup failed');
+  }
+}
+function putItem(obj){
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction('media','readwrite');
+    tx.oncomplete=()=>resolve();
+    tx.onerror=()=>reject(tx.error);
+    tx.objectStore('media').add(obj);
+  });
+}
+async function restoreGallery(file){
+  try{
+    if(!file){return}
+    toast('Reading backup…');
+    const text=await file.text();
+    const backup=JSON.parse(text);
+    if(backup.format!=='EVR Photo Gallery Backup' || !Array.isArray(backup.items)){
+      throw new Error('Invalid EVR backup');
+    }
+    let added=0;
+    for(const r of backup.items){
+      const blob=base64ToBlob(r.data,r.type);
+      await putItem({
+        name:r.name||'EVR Photo',
+        type:r.type||blob.type||'application/octet-stream',
+        blob,
+        created:r.created||Date.now(),
+        favorite:!!r.favorite
+      });
+      added++;
+    }
+    await refresh();
+    toast(`Restored ${added} item${added===1?'':'s'}`);
+  }catch(e){
+    console.error(e);
+    toast('Restore failed: invalid backup file');
+  }
+}
+
 function setFilter(f){filter=f}
 function clearFilter(){filter='all';renderGallery()}
 function showFavorites(){filter='favorite';showView('favoritesView');renderFavorites()}
@@ -251,6 +476,7 @@ if(id==='photosView')renderGallery();if(id==='albumsView')renderAlbums();if(id==
 function openNearby(){$('nearby').classList.add('open')}
 function closeNearby(){$('nearby').classList.remove('open')}
 function toast(t){let e=$('toast');e.textContent=t;e.style.opacity=1;e.style.transform='translateX(-50%) translateY(0)';clearTimeout(window.tt);window.tt=setTimeout(()=>{e.style.opacity=0;e.style.transform='translateX(-50%) translateY(20px)'},2200)}
+$('restoreInput').onchange=async e=>{await restoreGallery(e.target.files[0]);e.target.value=''}
 $('fileInput').onchange=async e=>{for(const f of e.target.files)await addFile(f);e.target.value='';await refresh();toast('Photos imported into EVR')}
 $('cameraInput').onchange=async e=>{for(const f of e.target.files)await addFile(f);e.target.value='';await refresh();toast('Camera photo added')}
 setInterval(()=>{$('clock').textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}).replace(/^0/,'')},1000);
