@@ -51,11 +51,17 @@ button{cursor:pointer}
 .backbar{height:66px;display:flex;align-items:center;gap:12px;padding:10px 15px;border-bottom:1px solid #12345c;background:#04152d}
 .backbar h2{font-size:17px;margin:0;flex:1;text-align:center}.backbar button{background:none;border:0;color:#fff;font-size:22px}
 .list{padding:12px 14px 100px}.album{display:flex;align-items:center;gap:12px;background:#082553;border:1px solid #164b80;border-radius:13px;padding:8px;margin-bottom:8px}.album img{width:52px;height:52px;object-fit:cover;border-radius:9px}.album b{display:block}.album small{color:#91add1}
-.viewer{position:fixed;z-index:100;inset:0;background:#000;display:none;flex-direction:column}.viewer.open{display:flex}.vtop{height:65px;padding:12px 15px;display:flex;align-items:center;justify-content:space-between}.vtop button,.vbottom button{background:none;border:0;color:#fff;font-size:24px}.vmedia{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden}.vmedia img,.vmedia video{max-width:100%;max-height:100%;object-fit:contain}.vbottom{height:86px;display:flex;justify-content:space-around;align-items:center;background:#06172df2}.vbottom span{display:block;font-size:10px;margin-top:4px}
+.viewer{position:fixed;z-index:100;inset:0;background:#000;display:none;flex-direction:column}.viewer.open{display:flex}.vtop{height:68px;padding:10px 15px;display:flex;align-items:center;gap:12px;justify-content:space-between;background:#06172df2;border-bottom:1px solid #173e69}.vtop button,.vbottom button{background:none;border:0;color:#fff;font-size:24px}.vmedia{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden}.vmedia img,.vmedia video{max-width:100%;max-height:100%;object-fit:contain}.vbottom{height:86px;display:flex;justify-content:space-around;align-items:center;background:#06172df2}.vbottom span{display:block;font-size:10px;margin-top:4px}
 .modal{position:fixed;z-index:110;inset:0;background:#0009;display:none;align-items:flex-end}.modal.open{display:flex}.sheet{width:100%;max-width:520px;margin:auto;background:#071d3c;border:1px solid #1a4e86;border-radius:24px 24px 0 0;padding:22px 18px 30px}.sheet h2{text-align:center;margin:0 0 15px}.sheet button.action{width:100%;height:52px;margin:6px 0;border:0;border-radius:14px;background:#0d3c7b;color:#fff;font-weight:700}.sheet button.primary{background:linear-gradient(90deg,#0d9cff,#285cff)}
 .empty{padding:40px 10px;text-align:center;color:#8ea8ca}.hidden{display:none!important}
 @media(min-width:700px){.app{min-height:900px;margin:20px 0;border-radius:28px;box-shadow:0 20px 80px #0008}.bottom{position:absolute;border-radius:0 0 28px 28px}}
 </style>
+
+<link rel="icon" type="image/png" sizes="512x512" href="evr-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="evr-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="EVR Gallery">
+
 </head>
 <body>
 <div class="app">
@@ -140,7 +146,7 @@ button{cursor:pointer}
 <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden>
 
 <div id="viewer" class="viewer">
-  <div class="vtop"><button onclick="closeViewer()">‹</button><span id="vtitle">Photo</span><button onclick="deleteCurrent()">🗑</button></div>
+  <div class="vtop"><button onclick="closeViewer(true)" aria-label="Back" style="width:46px;height:46px;border:1px solid #2b6da8;border-radius:13px;background:#0a2a55;color:#fff;font-size:32px;line-height:1">‹</button><span id="vtitle">Photo</span><button onclick="deleteCurrent()">🗑</button></div>
   <div id="vmedia" class="vmedia"></div>
   <div class="vbottom"><button onclick="shareCurrent()">⌯<span>Share</span></button><button onclick="saveCurrent()">⇩<span>Save</span></button><button onclick="toggleFavoriteCurrent()">☆<span>Favorite</span></button><button onclick="deleteCurrent()">⌫<span>Delete</span></button></div>
 </div>
@@ -216,8 +222,8 @@ let im=items.find(x=>matchAlbum(x,f));
 return `<div class="album" onclick="filter='${f}';showView('photosView');renderGallery()">${im?`<img src="${URL.createObjectURL(im.blob)}">`:'<div style="width:52px;height:52px;border-radius:9px;background:#0d3e7b;display:grid;place-items:center;font-size:25px">📁</div>'}<div><b>${n}</b><small>${c} items</small></div><span style="margin-left:auto">›</span></div>`}).join('')
 }
 function matchAlbum(x,f){if(f==='all')return true;if(f==='favorite')return x.favorite;if(f==='video')return x.type.startsWith('video/');if(f==='screenshot')return /screenshot|screen.?shot/i.test(x.name);return x.type.startsWith('image/')}
-async function openViewer(id){currentId=id;let x=items.find(i=>i.id===id);if(!x)return;$('vtitle').textContent=x.name;$('vmedia').innerHTML=x.type.startsWith('video/')?`<video src="${URL.createObjectURL(x.blob)}" controls autoplay playsinline></video>`:`<img src="${URL.createObjectURL(x.blob)}">`;$('viewer').classList.add('open')}
-function closeViewer(){$('viewer').classList.remove('open');$('vmedia').innerHTML='';currentId=null}
+async function openViewer(id){currentId=id;let x=items.find(i=>i.id===id);if(!x)return;$('vtitle').textContent=x.name;$('vmedia').innerHTML=x.type.startsWith('video/')?`<video src="${URL.createObjectURL(x.blob)}" controls autoplay playsinline></video>`:`<img src="${URL.createObjectURL(x.blob)}">`;$('viewer').classList.add('open');if(history.state?.evrViewer!==id)history.pushState({evrViewer:id},'',location.href.split('#')[0]+'#photo-'+id)}
+function closeViewer(fromBack=false){if(!$('viewer').classList.contains('open'))return;$('viewer').classList.remove('open');$('vmedia').innerHTML='';currentId=null;if(!fromBack && history.state?.evrViewer){history.back()}}
 function toggleFavoriteCurrent(){let x=items.find(i=>i.id===currentId);if(!x)return;x.favorite=!x.favorite;let tx=db.transaction('media','readwrite');tx.objectStore('media').put(x);tx.oncomplete=()=>{refresh();toast(x.favorite?'Added to Favorites':'Removed from Favorites')}}
 function deleteCurrent(){if(!currentId)return;if(!confirm('Delete this item from EVR Gallery?'))return;let tx=db.transaction('media','readwrite');tx.objectStore('media').delete(currentId);tx.oncomplete=()=>{closeViewer();refresh();toast('Deleted')}}
 async function shareCurrent(){
@@ -248,6 +254,9 @@ function toast(t){let e=$('toast');e.textContent=t;e.style.opacity=1;e.style.tra
 $('fileInput').onchange=async e=>{for(const f of e.target.files)await addFile(f);e.target.value='';await refresh();toast('Photos imported into EVR')}
 $('cameraInput').onchange=async e=>{for(const f of e.target.files)await addFile(f);e.target.value='';await refresh();toast('Camera photo added')}
 setInterval(()=>{$('clock').textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}).replace(/^0/,'')},1000);
+window.addEventListener('popstate',()=>{if($('viewer').classList.contains('open'))closeViewer(true)});
+history.replaceState({evrHome:true},'',location.href);
+
 (async()=>{setLogos();try{await openDB();await refresh()}catch(e){toast('Storage could not be opened')}})();
 </script>
 </body>
